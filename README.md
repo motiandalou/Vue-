@@ -1,2 +1,1 @@
-# Vue-backStageManagement
-基于vue开发的后台管理系统
+# backstage--后天管理项目
