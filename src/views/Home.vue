@@ -13,43 +13,59 @@
         >
       </el-header>
 
+      <!-- 中间部分: -->
       <el-container>
         <!--左侧侧边栏-->
-        <el-aside width="200px">
+        <el-aside class="aside" :width="isOpen?'40px':'200px'" >
           <!--左侧菜单区域-->
+          <div @click="switchMenu" class="toggleBtn">
+            <i :class="isOpen ? 'el-icon-s-fold' : 'el-icon-s-unfold'"></i>
+          </div>
+          <!-- :unique-opened="true":点开一个其他自动关闭  -->
           <el-menu
             default-active="2"
-            class="el-menu-vertical-demo"
             background-color="#545c64"
             text-color="#fff"
             active-text-color="#ffd04b"
+            :unique-opened="true"
+            
           >
             <!--一级菜单-->
-            <el-submenu index="1">
+            <!-- :index="item.id + ''":不加,点击第一级全部子级都出来了 -->
+            <el-submenu
+              :index="item.id + ''"
+              v-for="item in menulist"
+              :key="item.id"
+            >
               <!-- 一级菜单的模板 -->
+              <!-- slot="title" :具名插槽传值 -->
               <template slot="title">
                 <!-- 菜单图标 -->
-                <i class="el-icon-location"></i>
+                <i :class="iconObj[item.id]"></i>
                 <!-- 文本 -->
-                <span>导航1</span>
+                <span>{{ item.name }}</span>
               </template>
 
               <!-- 一级菜单下的二级菜单 -->
-              <el-submenu index="1-4">
+              <el-submenu
+                :index="subitem.id + ''"
+                v-for="subitem in item.child"
+                :key="subitem.id"
+              >
                 <template slot="title">
                   <!-- 二级菜单图标 -->
-                  <i class="el-icon-location"></i>
+                  <i :class="iconObj[item.id - 0 + 5]"></i>
                   <!-- 二级菜单文本 -->
-                  <span>二级菜单</span>
+                  <span>{{ subitem.name }}</span>
                 </template>
-                <el-menu-item index="1-4-1">选项1</el-menu-item>
               </el-submenu>
-
             </el-submenu>
           </el-menu>
         </el-aside>
+        <!--左侧侧边栏-->
         <!--主要区域容器-->
         <el-main>Main</el-main>
+        <!--主要区域容器-->
       </el-container>
     </el-container>
     <!--布局容器-->
@@ -62,10 +78,22 @@ export default {
   components: {},
   data() {
     return {
-      loginObj: {
-        username: "admin3",
-        password: "123456",
+      //侧边栏菜单数据:
+      menulist: [],
+      //icon图标:菜单管理
+      iconObj: {
+        "1": "iconfont icon-yonghuguanli",
+        "2": "iconfont icon-yuangongliebiao",
+        "3": "iconfont icon-shangpinliebiao",
+        "4": "iconfont icon-dingdanguanli",
+        "5": "iconfont icon-shujutongji",
+        "6": "iconfont icon-yonghuguanli",
+        "7": "iconfont icon-yuangongliebiao",
+        "8": "iconfont icon-shangpinliebiao",
+        "9": "iconfont icon-shangpinliebiao",
+        "10": "iconfont icon-shangpinliebiao",
       },
+      isOpen: false,
     };
   },
   methods: {
@@ -75,6 +103,17 @@ export default {
       window.sessionStorage.clear();
       //跳转到登陆界面
       this.$router.push("/login");
+    },
+    //动态渲染侧边栏菜单的数据:
+    async getMenus() {
+      const res = await this.$http.get("/api/menu");
+      console.log(res.data);
+      if (!res.status == "ok") return;
+      this.menulist = res.data.data;
+    },
+    //点击改变侧边栏的拉伸和收缩状态:
+    switchMenu() {
+      this.isOpen = !this.isOpen;
     },
   },
 
@@ -86,7 +125,10 @@ export default {
 
   beforeCreate() {},
 
-  created() {},
+  created() {
+    //最早存放数据的地方:
+    this.getMenus();
+  },
 
   beforeMount() {},
 
@@ -138,5 +180,27 @@ export default {
 .el-main {
   background-color: #e9eef3;
   line-height: 400px;
+}
+//icon图标和字体的间距:
+.iconfont {
+  margin-right: 10px;
+}
+//解决:背景的交接处多了1px的空间
+.el-menu {
+  border-right: none;
+}
+// 侧边栏左上角收缩扩展的功能:
+.toggleBtn {
+  line-height: 24px;
+  color: #fff;
+  text-align: left;
+  font-size: 16px;
+  padding-left: 10px;
+  cursor: pointer;
+  background-color: darkcyan;
+}
+//侧边栏左上角收缩动画:
+.aside{
+    transition: all 0.3s ease;
 }
 </style>
