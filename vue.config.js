@@ -54,11 +54,11 @@ module.exports = {
                             }, {
                                 "id": 5,
                                 "name": "分类参数",
-                                "path": "/home/userss"
+                                "path": "/home/users"
                             }, {
                                 "id": 6,
                                 "name": "商品分类",
-                                "path": "/home/producttype"
+                                "path": "/home/productType"
                             }]
                         }, {
                             "id": 4,

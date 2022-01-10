@@ -6,7 +6,7 @@
       <el-header>
         <div>
           <img src="https://ftp.bmp.ovh/imgs/2021/05/684c59686a76f389.jpg" />
-          <span class="title">跃华公司后台管理系统</span>
+          <span class="title">跃华公司后台管理</span>
         </div>
         <el-button type="success" @click="logout" size="mini"
           >退出按钮</el-button
@@ -16,19 +16,20 @@
       <!-- 中间部分: -->
       <el-container>
         <!--左侧侧边栏-->
-        <el-aside class="aside" :width="isOpen?'40px':'200px'" >
+        <el-aside class="aside" :width="isOpen ? '40px' : '200px'">
           <!--左侧菜单区域-->
           <div @click="switchMenu" class="toggleBtn">
             <i :class="isOpen ? 'el-icon-s-fold' : 'el-icon-s-unfold'"></i>
           </div>
           <!-- :unique-opened="true":点开一个其他自动关闭  -->
+          <!-- :router="true":实现elementUi 的按钮对页面的路由映射   -->
           <el-menu
             default-active="2"
             background-color="#545c64"
             text-color="#fff"
             active-text-color="#ffd04b"
             :unique-opened="true"
-            
+            :router="true"
           >
             <!--一级菜单-->
             <!-- :index="item.id + ''":不加,点击第一级全部子级都出来了 -->
@@ -47,8 +48,9 @@
               </template>
 
               <!-- 一级菜单下的二级菜单 -->
-              <el-submenu
-                :index="subitem.id + ''"
+              <!-- 从el-submenu改成el-menu-item -->
+              <el-menu-item
+                :index="subitem.path"
                 v-for="subitem in item.child"
                 :key="subitem.id"
               >
@@ -58,13 +60,16 @@
                   <!-- 二级菜单文本 -->
                   <span>{{ subitem.name }}</span>
                 </template>
-              </el-submenu>
+              </el-menu-item>
             </el-submenu>
           </el-menu>
         </el-aside>
         <!--左侧侧边栏-->
         <!--主要区域容器-->
-        <el-main>Main</el-main>
+        <el-main>
+          <!-- 将内容Main改成路由入口: -->
+          <router-view></router-view>
+        </el-main>
         <!--主要区域容器-->
       </el-container>
     </el-container>
@@ -200,7 +205,7 @@ export default {
   background-color: darkcyan;
 }
 //侧边栏左上角收缩动画:
-.aside{
-    transition: all 0.3s ease;
+.aside {
+  transition: all 0.3s ease;
 }
 </style>

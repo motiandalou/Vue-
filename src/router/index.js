@@ -2,14 +2,37 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 //专门测试的页面:
 import test from "../views/test.vue";
+//欢迎登录界面:
+import WelCome from '../views/WelCome'
+//主页面:
+import Home from '../views/Home.vue'
+//用户管理下的--用户列表页面:
+import Users from '@/components/Users'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
+    //默认去主界面:
     path: '/',
     name: 'Home',
-    component: test
+    component: Home,
+    redirect: 'welcome',
+    children: [
+      { path: 'welcome', component: WelCome }
+    ]
+  },
+  {
+    //主界面:
+    path: '/home',
+    name: 'Home',
+    component: Home,
+    redirect: '/welcome',
+    children: [
+      { path: '/welcome', component: WelCome },
+      //注意这里的path: 'users'不能加/users
+      { path: 'users', component: Users }
+    ]
   },
   {
     //登录页面:
@@ -17,12 +40,8 @@ const routes = [
     name: 'Login',
     component: () => import("@/views/Login.vue")
   },
-  {
-    //登录页面:
-    path: '/home',
-    name: 'Home',
-    component: () => import("@/views/Home.vue")
-  }
+
+
 
 ]
 
