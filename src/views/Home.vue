@@ -8,9 +8,7 @@
           <img src="https://ftp.bmp.ovh/imgs/2021/05/684c59686a76f389.jpg" />
           <span class="title">跃华公司后台管理</span>
         </div>
-        <el-button type="success" @click="logout" size="mini"
-          >退出按钮</el-button
-        >
+        <el-button type="success" @click="logout" size="mini">退出</el-button>
       </el-header>
 
       <!-- 中间部分: -->

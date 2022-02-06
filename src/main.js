@@ -3,6 +3,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+// 基础组件的自动化全局注册。全局注册的行为必须在根 Vue 实例 (通过 new Vue) 创建之前发生
+import '@/components/index.js'
 // import '@/assets/css/reset.scss'
 //导入elementUi:
 import ElementUI from 'element-ui';
