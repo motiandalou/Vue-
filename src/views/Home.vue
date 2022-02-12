@@ -40,7 +40,7 @@
               <!-- slot="title" :具名插槽传值 -->
               <template slot="title">
                 <!-- 菜单图标 -->
-                <i :class="iconObj[item.id]"></i>
+                <i :class="iconObj[item.name]"></i>
                 <!-- 文本 -->
                 <span>{{ item.name }}</span>
               </template>
@@ -54,7 +54,7 @@
               >
                 <template slot="title">
                   <!-- 二级菜单图标 -->
-                  <i :class="iconObj[item.id - 0 + 5]"></i>
+                  <i :class="iconObj[subitem.name]"></i>
                   <!-- 二级菜单文本 -->
                   <span>{{ subitem.name }}</span>
                 </template>
@@ -85,16 +85,16 @@ export default {
       menulist: [],
       //icon图标:菜单管理
       iconObj: {
-        "1": "iconfont icon-yonghuguanli",
-        "2": "iconfont icon-yuangongliebiao",
-        "3": "iconfont icon-shangpinliebiao",
-        "4": "iconfont icon-dingdanguanli",
-        "5": "iconfont icon-shujutongji",
-        "6": "iconfont icon-yonghuguanli",
-        "7": "iconfont icon-yuangongliebiao",
-        "8": "iconfont icon-shangpinliebiao",
-        "9": "iconfont icon-shangpinliebiao",
-        "10": "iconfont icon-shangpinliebiao",
+        "用户管理": "iconfont icon-yonghuguanli",
+        "用户列表": "iconfont icon-yuangongliebiao",
+        "商品列表": "iconfont icon-shangpinliebiao",
+        "订单管理": "iconfont icon-dingdanguanli",
+        "数据统计": "iconfont icon-shujutongji",
+        "员工列表": "iconfont icon-yonghuguanli",
+        "员工管理": "iconfont icon-yuangongliebiao",
+        "分类参数": "iconfont icon-shangpinliebiao",
+        "商品管理": "iconfont icon-shangpinliebiao",
+        "商品分类": "iconfont icon-shangpinliebiao",
       },
       isOpen: false,
     };
@@ -205,5 +205,10 @@ export default {
 //侧边栏左上角收缩动画:
 .aside {
   transition: all 0.3s ease;
+}
+//改变入口组件的样式:
+.el-main {
+  background-color: #e9eef3 ;
+  line-height: 0px ;
 }
 </style>
